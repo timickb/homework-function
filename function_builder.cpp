@@ -15,10 +15,6 @@ void replaceAll(string &s, const string &search, const string &replace) {
 
 vector<pair<int, int>> calculateFunction(string value, int l, int r) {
     vector<pair<int, int>> result;
-    vector<int> xPos;
-
-    for(int i = 0; i < value.length(); i++)
-        if(value[i] == 'x') xPos.push_back(i);
 
     for(int x = l; x <= r; x++) {
         string cvalue = value;
