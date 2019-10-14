@@ -1,26 +1,19 @@
 #include <iostream>
 #include <stack>
 #include <string>
+#include <math.h>
 using namespace std;
-
-int mypow(int a, int b) {
-    if(b == 0) return 1;
-    if(b == 1) return a;
-    if(b % 2 == 0) return mypow(a, b/2) * mypow(a, b/2);
-    else return mypow(a, (b-1)/2) * mypow(a, (b-1)/2) * a;
-    return 0;
-}
 
 void makeOperation(stack<double>& nums, char op) {
     if(nums.size() == 1) return;
-    int b = nums.top(); nums.pop();
-    int a = nums.top(); nums.pop();
+    double b = nums.top(); nums.pop();
+    double a = nums.top(); nums.pop();
     switch(op) {
         case '+': nums.push(a+b); break;
         case '-': nums.push(a-b); break;
         case '*': nums.push(a*b); break;
         case '/': nums.push((double)a/(double)b); break;
-        case '^': nums.push(mypow(a, b)); break;
+        case '^': nums.push(powl(a, b)); break;
     }
 }
 
@@ -36,6 +29,10 @@ int priority(char op) {
 }
 
 double calculate(string s, bool& crash) {
+    if(!isdigit(s[0]) && s[0] != '(' && s[0] != '-') {
+        crash = true;
+        return 0;
+    }
     s = "(" + s + ")";
     stack<double> nums;
     stack<char> ops;
@@ -60,20 +57,20 @@ double calculate(string s, bool& crash) {
                     ops.pop();
                 }
             }
-        } else if(isdigit(s[i]) || s[i] == '-') {
+        } else if(isdigit(s[i]) || s[i] == '-' || s[i] == '.') {
             string number = "";
             if(s[i] == '-') {
                 number = "-";
                 i++;
             }
             for(int j = i; true; j++) {
-                if(isdigit(s[j])) number += s[j];
+                if(isdigit(s[j]) || s[j] == '.') number += s[j];
                 else {
                     i = j-1;
                     break;
                 }
             }
-            nums.push(stoi(number));
+            nums.push(stod(number));
         }
     }
     while(!ops.empty()) {
