@@ -1,5 +1,5 @@
 #include <iostream>
-#include "calculator.cpp"
+#include "dcalculator.cpp"
 using namespace std;
 
 int main() {
@@ -8,5 +8,5 @@ int main() {
     bool flag;
     double result = calculate(s, flag);
     if(!flag) cout << result << endl;
-    else cout << "Division by zero!" << endl;
+    else cout << "Error" << endl;
 }
