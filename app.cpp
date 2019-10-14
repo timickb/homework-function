@@ -5,5 +5,8 @@ using namespace std;
 int main() {
     string s;
     cin >> s;
-    cout << calculate(s) << endl;
+    bool flag;
+    double result = calculate(s, flag);
+    if(!flag) cout << result << endl;
+    else cout << "Division by zero!" << endl;
 }

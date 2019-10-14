@@ -11,7 +11,7 @@ int mypow(int a, int b) {
     return 0;
 }
 
-void makeOperation(stack<int>& nums, char op) {
+void makeOperation(stack<double>& nums, char op) {
     if(nums.size() == 1) return;
     int b = nums.top(); nums.pop();
     int a = nums.top(); nums.pop();
@@ -19,7 +19,7 @@ void makeOperation(stack<int>& nums, char op) {
         case '+': nums.push(a+b); break;
         case '-': nums.push(a-b); break;
         case '*': nums.push(a*b); break;
-        case '/': nums.push(a/b); break;
+        case '/': nums.push((double)a/(double)b); break;
         case '^': nums.push(mypow(a, b)); break;
     }
 }
@@ -35,9 +35,9 @@ int priority(char op) {
     return 4;
 }
 
-int calculate(string s) {
+double calculate(string s, bool& crash) {
     s = "(" + s + ")";
-    stack<int> nums;
+    stack<double> nums;
     stack<char> ops;
     for(int i = 0; i < s.length(); i++) {
         if(s[i] == '(') ops.push('(');
@@ -47,6 +47,9 @@ int calculate(string s) {
                 ops.pop();
             }
             ops.pop();
+        } else if(s[i] == '/' && s[i+1] == '0') {
+            crash = true;
+            return 0;
         } else if(isOperation(s[i]) && (isdigit(s[i-1]) || s[i-1] == ')')) { 
             while(true) {
                 if(priority(ops.top()) < priority(s[i]) || ops.top() == '(' || ops.empty()) {
