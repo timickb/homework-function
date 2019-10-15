@@ -33,6 +33,7 @@ double calculate(string s, bool& crash) {
         crash = true;
         return 0;
     }
+    if(s[0] == '-') s.insert(0, "0");
     s = "(" + s + ")";
     stack<double> nums;
     stack<char> ops;
