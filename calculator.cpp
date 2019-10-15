@@ -12,7 +12,7 @@ void makeOperation(stack<double>& nums, char op) {
         case '+': nums.push(a+b); break;
         case '-': nums.push(a-b); break;
         case '*': nums.push(a*b); break;
-        case '/': nums.push((double)a/(double)b); break;
+        case '/': nums.push(a/b); break;
         case '^': nums.push(powl(a, b)); break;
     }
 }
@@ -79,9 +79,3 @@ double calculate(string s, bool& crash) {
     }
     return nums.top();
 }
-
-/*int main() {
-    string s;
-    cin >> s;
-    cout << calculate(s) << endl;
-}*/
